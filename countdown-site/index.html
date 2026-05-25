@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Countdown</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aubrey&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Aubrey', serif;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    /* Háttér slideshow */
+    #bg-slideshow {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+    }
+
+    #bg-slideshow .slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      animation: kenburns 12s ease-in-out infinite alternate;
+    }
+
+    #bg-slideshow .slide.active {
+      opacity: 1;
+    }
+
+    @keyframes kenburns {
+      from { transform: scale(1.0) translate(0, 0); }
+      to   { transform: scale(1.08) translate(-1%, -1%); }
+    }
+
+    /* Sötétítő réteg */
+    #bg-slideshow::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    /* Countdown stílus */
+    #countdown-box {
+      text-align: center;
+      z-index: 1;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+    }
+
+    #countdown {
+      font-family: 'Aubrey', serif;
+      font-size: 6rem;
+      letter-spacing: 0.06em;
+    }
+
+    #label {
+      font-family: 'Aubrey', serif;
+      font-size: 1.2rem;
+      margin-top: 0.5em;
+      opacity: 0.88;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Háttér képek – Tropea, Calabria (Pexels) -->
+<div id="bg-slideshow">
+  <div class="slide" style="background-image: url('https://www.foodandwine.com/thmb/9-SneJtoQVBEmmj7r1wXyFI8K5Y=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Spiced-Negroni-FT-MAG-RECIPE-1124-24f2b74e0c994410aa9684688a0e92ef.jpg')"></div>
+  <div class="slide" style="background-image: url('https://images.pexels.com/photos/27373485/pexels-photo-27373485.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')"></div>
+  <div class="slide" style="background-image: url('https://images.pexels.com/photos/27373548/pexels-photo-27373548.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')"></div>
+  <div class="slide" style="background-image: url('https://images.pexels.com/photos/27373540/pexels-photo-27373540.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')"></div>
+  <div class="slide" style="background-image: url('https://images.pexels.com/photos/34150665/pexels-photo-34150665.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')"></div>
+  <div class="slide" style="background-image: url('https://images.pexels.com/photos/27394977/pexels-photo-27394977.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')"></div>
+  <div class="slide" style="background-image: url('https://images.pexels.com/photos/27373550/pexels-photo-27373550.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')"></div>
+  <div class="slide" style="background-image: url('https://images.pexels.com/photos/36804930/pexels-photo-36804930.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')"></div>
+  <div class="slide" style="background-image: url('https://images.pexels.com/photos/4335661/pexels-photo-4335661.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')"></div>
+  <div class="slide" style="background-image: url('https://images.pexels.com/photos/3794291/pexels-photo-3794291.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')"></div>
+</div>
+
+<div id="countdown-box">
+  <div id="countdown"></div>
+
+</div>
+
+<script>
+  // ÁLLÍTSD ÁT EZT 👇
+  const targetDate = new Date("2026-06-25T00:00:00");
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = targetDate - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    document.getElementById("countdown").innerText = days + " nap";
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Háttér slideshow – random kezdőkép
+  const slides = document.querySelectorAll('#bg-slideshow .slide');
+  slides.forEach(s => s.classList.remove('active'));
+  let current = Math.floor(Math.random() * slides.length);
+  slides[current].classList.add('active');
+
+  setInterval(() => {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }, 6000);
+</script>
+
+</body>
+</html>
+``
